@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "89055311589",
+    "project_id": "gant-cfc86",
+    "storage_bucket": "gant-cfc86.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:89055311589:android:91b99c6a5c4a7f68b8860c",
+        "android_client_info": {
+          "package_name": "com.gant.gantapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "89055311589-dgfg0v53gg3svouoo3hveog914t4u4ij.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gant.gantapplication",
+            "certificate_hash": "85d57e81baa94889860e4947bbf6be2856097ded"
+          }
+        },
+        {
+          "client_id": "89055311589-f1hbt927aa7s4ccr2p1se094lmilnm04.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1BUbjV-i-Y3TRGw7WE9D_K_lYz6gUNAM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "89055311589-f1hbt927aa7s4ccr2p1se094lmilnm04.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
