@@ -6,4 +6,13 @@
     </style>
 
     <style name="Theme.GANTApplication" parent="Base.Theme.GANTApplication" />
+
+    <style name="Theme.GANTApplication.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.GANTApplication.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.GANTApplication.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
