@@ -15,6 +15,7 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.gant.gantapplication.Model.Products;
 import com.gant.gantapplication.Prevalent.Prevalent;
 import com.gant.gantapplication.ViewHolder.ProductViewHolder;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
@@ -58,6 +59,16 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Home");
         setSupportActionBar(binding.appBarHome.toolbar);
+
+        FloatingActionButton Fab = (FloatingActionButton) findViewById(R.idfab);
+        fab.setOnClickListener(new View.OnclickListener(){
+            @Override
+            public void onClick(View view)
+            {
+                Intent intent = new Intent(HomeActivity.this, CartActivity.class);
+                startActivity(intent);
+            }
+        });
         binding.appBarHome.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
