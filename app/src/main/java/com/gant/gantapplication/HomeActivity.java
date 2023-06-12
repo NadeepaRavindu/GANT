@@ -1,5 +1,6 @@
 package com.gant.gantapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -17,6 +18,7 @@ import com.gant.gantapplication.ViewHolder.ProductViewHolder;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -71,6 +73,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 R.id.nav_cart, R.id.nav_orders, R.id.nav_categories, R.id.nav_settings, R.id.nav_logout)
                 .setOpenableLayout(drawer)
                 .build();
+        Intent intent = new Intent(HomeActivity.this, SettingsActivity.class);
+        StartActivity(intent);
+
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_home);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
@@ -80,6 +85,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         CircleImageView profileImageView = headerView.findViewById(R.id.user_profile_image);
 
         userNameTextView.setText(Prevalent.currentOnlineUser.getName());
+        Picasso.get()load(Prevalent.currentOnlineUser.getImage()).placeholder(R.drawable.profile).into(profileImageView);
 
         recyclerView = findViewById(R.id.recycler_menu);
         recyclerView.setHasFixedSize(true);
@@ -102,6 +108,16 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 holder.txtProductDescription.setText(model.getDescription());
                 holder.txtProductPrice.setText("Price = " +model.getPrice()+"$");
                 Picasso.get().load(model.getImage()).into(holder.imageView);
+
+                holder.itemView.setOnClickListener(new View.OnClickListener());
+
+                @Override
+                        public void onClick(View view)
+                {
+                    Intent intent = new Intent(HomeActivity.this,ProductDetailsActivity.class)
+                            intent.putExtra("pid", model.getPid());
+                    StartActivity(intent);
+                }
 
             }
 
