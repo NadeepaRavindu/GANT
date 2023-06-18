@@ -23,6 +23,7 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.gant.gantapplication.Model.Cart;
 import com.gant.gantapplication.Prevalent.Prevalent;
 import com.gant.gantapplication.ViewHolder.CartViewHolder;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -58,19 +59,18 @@ public class CartActivity extends AppCompatActivity
         txtTotalAmount = (TextView) findViewById(R.id.total_price);
         txtMsg1 = (TextView) findViewById(R.id.msg1);
 
-        NextProcessBtn.setOnClickListener(new View.OnClickListener())
-        {
+        NextProcessBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
+            public void onClick(View v)
             {
-                txtTotalAmount.setText("Total Price = $"+ String.valueOf(overTotalPrice)););
+                txtTotalAmount.setText("Total Price = $"+ String.valueOf(overTotalPrice));
 
                 Intent intent = new Intent(CartActivity.this, ConfirmFinalOrderActivity.class);
                 intent.putExtra( "Total Price", String.valueOf(overTotalPrice));
                 startActivity(intent);
                 finish();
             }
-        }
+        });
 
 
     }
@@ -90,10 +90,9 @@ public class CartActivity extends AppCompatActivity
         FirebaseRecyclerAdapter<Cart, CartViewHolder>  adapter
                 = new FirebaseRecyclerAdapter<Cart, CartViewHolder>(options)
         {
-            Protected void onBindViewHolder(@NonNull CartViewHolder holder, int position,@NonNull Cart model)
-        {
             @Override
-                    holder.txtProductQuantity.setText("Quantity = "+ model.getQuantity());
+            protected void onBindViewHolder(@NonNull CartViewHolder holder, int position, @NonNull Cart model) {
+                holder.txtProductQuantity.setText("Quantity = "+ model.getQuantity());
             holder.txtProductPrice.setText("Price"+ model.getPrice() + "$");
             holder.txtProductName.setText(model.getPname());
 
@@ -128,9 +127,9 @@ public class CartActivity extends AppCompatActivity
                                         .child("Products")
                                         .child(model.getPid())
                                         .removeValue()
-                                        .addOnCompleteListener(new onCompletionListener<Void>(){
+                                        .addOnCompleteListener(new OnCompleteListener<Void>(){
                                             @Override
-                                            public Void onComplete(@NonNull Task<Void> task)
+                                            public void onComplete(@NonNull Task<Void> task)
                                             {
                                                 if (task.isSuccessful())
                                                 {
@@ -170,7 +169,7 @@ public class CartActivity extends AppCompatActivity
         DatabaseReference ordersRef;
         ordersRef = FirebaseDatabase.getInstance().getReference().child("Orders").child(Prevalent.currentOnlineUser.getphone());
 
-        ordersRef.addValuEventListener(new ValueEventListener(){
+        ordersRef.addValueEventListener(new ValueEventListener(){
             @Override
             public void  onDataChange (DataSnapshot dataSnapshot)
             {

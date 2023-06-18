@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.gant.gantapplication.Prevalent.Prevalent;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -56,43 +57,36 @@ public class ConfirmFinalOrderActivity extends AppCompatActivity
 
     }
 
-    private void Check()
-    {
-        if (TextUtils.isEmpty(nameEditText.getText().toString()))
-        {
-            Toast.makeText(this,"Please provide Your full name.", Toast.LENGTH_SHORT).show();
-        }
-        else if (TextUtils.isEmpty(phoneEditText.getText().toString())
-        {
-            Toast.makeText(this,"Please provide Your phone number.", Toast.LENGTH_SHORT).show();
-        }
-        else if (TextUtils.isEmpty(addressEditText.getText().toString())
-        {
-            Toast.makeText(this,"Please provide Your address.", Toast.LENGTH_SHORT).show();
-        }
-        else if (TextUtils.isEmpty(cityEditText.getText().toString())
-        {
-            Toast.makeText(this,"Please provide Your city name.", Toast.LENGTH_SHORT).show();
-        }
-        else
-        {
+    private void Check() {
+        if (TextUtils.isEmpty(nameEditText.getText().toString())) {
+            Toast.makeText(this, "Please provide Your full name.", Toast.LENGTH_SHORT).show();
+        } else if (TextUtils.isEmpty(phoneEditText.getText().toString())) {
+            Toast.makeText(this, "Please provide Your phone number.", Toast.LENGTH_SHORT).show();
+        } else if (TextUtils.isEmpty(addressEditText.getText().toString())) {
+            Toast.makeText(this, "Please provide Your .", Toast.LENGTH_SHORT).show();
+        } else if (TextUtils.isEmpty(cityEditText.getText().toString())) {
+            Toast.makeText(this, "Please provide Your city name.", Toast.LENGTH_SHORT).show();
+        } else {
             ConfirmOrder();
         }
     }
 
 
 
-    private void ConfirmOrder()
-    {
+    private void ConfirmOrder() {
         final String saveCurrentDate, saveCurrentTime;
 
-        Calendar calForDate = calendar.getInstance();
-        simpleDateFormat currentDate = new SimpleDateFormat("MMM dd, YYYY");
+        Calendar calForDate = Calendar.getInstance();
+        SimpleDateFormat currentDate = new SimpleDateFormat("MMM dd, YYYY");
         saveCurrentDate = currentDate.format(calForDate.getTime());
+
+        SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm:ss a");
+        saveCurrentTime = currentDate.format(calForDate.getTime());
 
         final DatabaseReference ordersRef = FirebaseDatabase.getInstance().getReference()
                 .child("Orders")
                 .child(Prevalent.currentOnlineUser.getPhone());
+
 
 
         HashMap<String, Object> ordersMap = new HashMap<>();
@@ -105,35 +99,34 @@ public class ConfirmFinalOrderActivity extends AppCompatActivity
         ordersMap.put("time", saveCurrentTime);
         ordersMap.put("state","not shipped");
 
-        ordersRef.updatechildren(ordersMapp).addOnCompleteListeListener(new MediaPlayer.OnCompletionListener())
-        @Override
-        public void onComplete(Task<void> task)
-        {
-            if (task.isSuccessful())
-            {
-                FirebaseDatabase.getReference()
-                        .child("Cart List")
-                        .child("User View")
-                        .child(Prevalent.currentOnlineUser.getPhone())
-                        .removeValue()
-                        .addOnCompleteListener(new OnCompleteListener<Void>(){
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task)
-                            {
-                                if(task.isSuccessful())
-                                {
-                                    Toast.makeText(ConfirmFinalOrderActivity.this, "Your final order has been placed successfully.", Toast.LENGTH_SHORT).show();
+        ordersRef.updateChildren(ordersMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
 
-                                    Intent intent = new Intent( ConfirmFinalOrderActivity.this, HomeActivity.class);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                    startActivity(intent);
-                                    finish();
+
+                if (task.isSuccessful()) {
+                    FirebaseDatabase.getInstance().getReference()
+                            .child("Cart List")
+                            .child("User View")
+                            .child(Prevalent.currentOnlineUser.getPhone())
+                            .removeValue()
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        Toast.makeText(ConfirmFinalOrderActivity.this, "Your final order has been placed successfully.", Toast.LENGTH_SHORT).show();
+
+                                        Intent intent = new Intent(ConfirmFinalOrderActivity.this, HomeActivity.class);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                        startActivity(intent);
+                                        finish();
+                                    }
                                 }
-                            }
-                        });
+                            });
+                }
             }
-        }
 
 
+        });
     }
 }
