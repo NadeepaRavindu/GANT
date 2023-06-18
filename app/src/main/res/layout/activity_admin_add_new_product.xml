@@ -48,7 +48,7 @@
         android:layout_marginLeft="45dp"
         android:layout_marginRight="45dp"
         android:background="@drawable/inputs_design"
-        />
+         />
 
 
     <EditText
